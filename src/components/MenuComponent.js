@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from 'reactstrap';
 
-    // One way of writing a functiona component
+    // One way of writing a function component
     function RenderMenuItem({ dish, onClick }) {
         return(
             <Card onClick={()=> onClick(dish.id)}>

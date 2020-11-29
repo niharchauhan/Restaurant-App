@@ -34,14 +34,24 @@ class Main extends Component {
         />
       );
     }
+
+    const DishWithId = ({match}) => {
+      return(
+        <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]} 
+          comments = {this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10)) }
+        />
+      );
+    }
+
     return (
       <div>
         <Header />
         <Switch>
           <Route path = "/home" component={HomePage} />
           <Route exact path = "/menu" component={() => <Menu dishes={this.state.dishes} />} />
-          {/* anything that doesn't match to above two will automatically redirect to home */}
+          <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/contactus" component={Contact} />
+          {/* anything that doesn't match to above two will automatically redirect to home */}
           <Redirect to="/home" />
         </Switch>
         <Footer />

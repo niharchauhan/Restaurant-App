@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem, Button, Modal, ModalBody, ModalHeader, Label, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
@@ -114,7 +115,27 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
         render() {
             console.log("DishdetailComponent render invoked");
 
-            if (this.props.dish!=null) {
+            if(this.props.isLoading) {
+                return (
+                    <div className="container">
+                        <div className="row">
+                            <Loading />
+                        </div>
+                    </div>
+                );
+            }
+
+            else if(this.props.errMess) {
+                return (
+                    <div className="container">
+                        <div className="row">
+                            <h4>{this.props.errMess}</h4>
+                        </div>
+                    </div>
+                );
+            }
+
+            else if (this.props.dish!=null) {
                 return (
                     <React.Fragment>
                         <div className = "container">

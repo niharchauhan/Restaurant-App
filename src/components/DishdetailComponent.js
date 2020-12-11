@@ -20,7 +20,7 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
         );
     }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
         let options = { year : "numeric", month : "short", day : "numeric" };
         var commentList = comments.map(comment => {
             return (
@@ -39,7 +39,7 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
                 <ul className="list-unstyled">
                     {commentList}
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
     }
@@ -55,7 +55,7 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
         }
         handleSubmit(values) {
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
         }
         toggleModal() {
             this.setState({
@@ -75,7 +75,7 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
                             <LocalForm onSubmit={(values) => this.handleSubmit(values)} >
                                 <Row className="form-group col-12">
                                     <Label htmlFor="rating">Rating</Label>
-                                    <Control.select model=".rating" id="rating" name="rating" placeholder="1" className="form-control" >
+                                    <Control.select model=".rating" id="rating" name="rating" className="form-control" >
                                         <option >1</option>
                                         <option >2</option>
                                         <option >3</option>
@@ -156,7 +156,7 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
                                 </div>
                                 <div className="col-12 col-md-5 m-1">
                                     <RenderComments comments = {this.props.comments}
-                                        addComment = {this.props.addComment}
+                                        postComment = {this.props.postComment}
                                         dishId = {this.props.dish.id} />
                                 </div>
                             </div>

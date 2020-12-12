@@ -4,19 +4,25 @@ import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
 
     function RenderDish({dish}) {
         return (
-            <Card>
-                <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
-                <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
-                    <CardText>{dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in
+                transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+                }} >   
+                <Card>
+                    <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         );
     }
 
@@ -24,12 +30,14 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
         let options = { year : "numeric", month : "short", day : "numeric" };
         var commentList = comments.map(comment => {
             return (
-                <li key={comment.id} >
-                    {comment.comment}
-                    <br /><br />
-                    -- {comment.author}, {new Date(comment.date).toLocaleDateString("en-IN", options) }
-                    <br /><br />
-                </li>
+                <Fade in>
+                    <li key={comment.id} >
+                        {comment.comment}
+                        <br /><br />
+                        -- {comment.author}, {new Date(comment.date).toLocaleDateString("en-IN", options) }
+                        <br /><br />
+                    </li>
+                </Fade>
             );
         });
 
@@ -37,7 +45,9 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
             <div>
                 <h4>Comments</h4>
                 <ul className="list-unstyled">
-                    {commentList}
+                    <Stagger in>
+                        {commentList}
+                    </Stagger>
                 </ul>
                 <CommentForm dishId={dishId} postComment={postComment} />
             </div>
